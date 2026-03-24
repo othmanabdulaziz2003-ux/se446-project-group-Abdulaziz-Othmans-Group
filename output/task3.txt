@@ -1,0 +1,81 @@
+PS C:\Users\PCD\Documents\se446-project-group-Abdulaziz-Othman-Group\src> scp mapper_location.py reducer_sum.py amissa@134.209.172.50:~/
+amissa@134.209.172.50's password: 
+mapper_location.py                                                                                                                                                                                                       100%  597     3.2KB/s   00:00    
+reducer_sum.py                                                                                                                                                                                                           100%  525     2.8KB/s   00:00    
+PS C:\Users\PCD\Documents\se446-project-group-Abdulaziz-Othman-Group\src> ssh amissa@134.209.172.50    
+amissa@134.209.172.50's password: 
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-170-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Mar 23 20:34:36 UTC 2026
+
+  System load:  0.02               Processes:             123
+  Usage of /:   21.8% of 77.35GB   Users logged in:       1
+  Memory usage: 50%                IPv4 address for eth0: 134.209.172.50
+  Swap usage:   0%                 IPv4 address for eth0: 10.17.0.5
+
+Expanded Security Maintenance for Applications is not enabled.
+
+12 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+New release '24.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+*** System restart required ***
+Last login: Mon Mar 23 20:21:06 2026 from 188.54.72.102
+amissa@master-node:~$ source /etc/profile.d/hadoop.sh
+amissa@master-node:~$ mapred streaming \
+  -files mapper_location.py,reducer_sum.py \
+  -mapper "python3 mapper_location.py" \
+  -reducer "python3 reducer_sum.py" \
+  -input /data/chicago_crimes.csv \
+  -output /user/amissa/project/m1/task3
+packageJobJar: [] [/opt/hadoop-3.4.1/share/hadoop/tools/lib/hadoop-streaming-3.4.1.jar] /tmp/streamjob7726410292104933482.jar tmpDir=null
+2026-03-23 20:35:35,790 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-23 20:35:36,171 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-23 20:35:36,418 ERROR streaming.StreamJob: Error Launching job : Output directory hdfs://master-node:9000/user/amissa/project/m1/task3 already exists
+Streaming Command Failed!
+amissa@master-node:~$ hdfs dfs -rm -r /user/amissa/project/m1/task3
+Deleted /user/amissa/project/m1/task3
+amissa@master-node:~$ mapred streaming \
+  -files mapper_location.py,reducer_sum.py \
+  -mapper "python3 mapper_location.py" \
+  -reducer "python3 reducer_sum.py" \
+  -input /data/chicago_crimes.csv \
+  -output /user/amissa/project/m1/task3
+packageJobJar: [] [/opt/hadoop-3.4.1/share/hadoop/tools/lib/hadoop-streaming-3.4.1.jar] /tmp/streamjob11604072849737415040.jar tmpDir=null
+2026-03-23 20:35:59,819 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-23 20:36:00,254 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-23 20:36:00,851 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/amissa/.staging/job_1771402826595_0140
+2026-03-23 20:36:02,773 INFO mapred.FileInputFormat: Total input files to process : 1
+2026-03-23 20:36:02,806 INFO net.NetworkTopology: Adding a new node: /default-rack/164.92.103.148:9866
+2026-03-23 20:36:02,809 INFO net.NetworkTopology: Adding a new node: /default-rack/146.190.147.119:9866
+2026-03-23 20:36:03,479 INFO mapreduce.JobSubmitter: number of splits:2
+2026-03-23 20:36:04,435 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1771402826595_0140
+2026-03-23 20:36:04,435 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-03-23 20:36:04,799 INFO conf.Configuration: resource-types.xml not found
+2026-03-23 20:36:04,800 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-03-23 20:36:04,922 INFO impl.YarnClientImpl: Submitted application application_1771402826595_0140
+2026-03-23 20:36:04,983 INFO mapreduce.Job: The url to track the job: http://master-node:8088/proxy/application_1771402826595_0140/
+2026-03-23 20:36:04,995 INFO mapreduce.Job: Running job: job_1771402826595_0140
+2026-03-23 20:36:21,767 INFO mapreduce.Job: Job job_1771402826595_0140 running in uber mode : false
+2026-03-23 20:36:21,770 INFO mapreduce.Job:  map 0% reduce 0%
+2026-03-23 20:36:48,477 INFO mapreduce.Job:  map 100% reduce 0%
+2026-03-23 20:37:00,568 INFO mapreduce.Job:  map 100% reduce 100%
+2026-03-23 20:37:03,419 INFO mapreduce.Job: Job job_1771402826595_0140 completed successfully
+2026-03-23 20:37:03,703 INFO mapreduce.Job: Counters: 54
+...
+2026-03-23 20:37:03,703 INFO streaming.StreamJob: Output directory: /user/amissa/project/m1/task3
+amissa@master-node:~$ hdfs dfs -cat /user/amissa/project/m1/task3/part-00000
+BUS     2658
+FISTS   1157
+...
+YMCA    3
