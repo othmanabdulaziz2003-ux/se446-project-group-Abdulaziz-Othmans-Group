@@ -346,8 +346,145 @@ FISTS   1157
 ...
 YMCA    3
 ```
+## Task 4: Year-wise Crime Analysis
 
+### Command Used
 
+```bash
+mapred streaming \
+  -files mapper_task4.py,reducer.py \
+  -mapper "python3 mapper_task4.py" \
+  -reducer "python3 reducer.py" \
+  -input /data/chicago_crimes.csv \
+  -output /user/mnajjar/project/m1/task4
+```
+
+### Sample Output
+
+| Year | Crime Count |
+|------|-------------|
+| 2001 | 467,301 |
+| 2002 | 205,267 |
+| 2003 | 985 |
+| 2004 | 915 |
+| 2005 | 1,031 |
+| 2006 | 796 |
+| 2007 | 762 |
+| 2008 | 1,010 |
+| 2009 | 910 |
+| 2010 | 695 |
+| 2011 | 770 |
+| 2012 | 800 |
+| 2013 | 714 |
+| 2014 | 825 |
+| 2015 | 1,105 |
+| 2016 | 1,339 |
+| 2017 | 1,387 |
+| 2018 | 1,327 |
+| 2019 | 1,174 |
+| 2020 | 1,832 |
+| 2021 | 2,399 |
+| 2022 | 4,678 |
+| 2023 | 81,461 |
+| 2024 | 880 |
+| 2025 | 12,710 |
+
+### Interpretation
+
+The dataset appears inconsistent across years, with the highest counts in 2001 (467,301) and 2002 (205,267), followed by a sharp drop in subsequent years and a spike again in 2023 (81,461), suggesting uneven data distribution.
+
+### Full Logs
+
+```
+mnajjar@master-node:~$ mapred streaming \
+  -files mapper_task4.py,reducer.py \
+  -mapper "python3 mapper_task4.py" \
+  -reducer "python3 reducer.py" \
+  -input /data/chicago_crimes.csv \
+  -output /user/mnajjar/project/m1/task4
+packageJobJar: [] [/opt/hadoop-3.4.1/share/hadoop/tools/lib/hadoop-streaming-3.4.1.jar] /tmp/streamjob9093097015341325756.jar tmpDir=null
+2026-03-22 16:13:31,911 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-22 16:13:32,159 INFO client.DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master-node/134.209.172.50:8032
+2026-03-22 16:13:32,576 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/mnajjar/.staging/job_1771402826595_0111
+2026-03-22 16:13:34,377 INFO mapred.FileInputFormat: Total input files to process : 1
+2026-03-22 16:13:34,412 INFO net.NetworkTopology: Adding a new node: /default-rack/164.92.103.148:9866
+2026-03-22 16:13:34,413 INFO net.NetworkTopology: Adding a new node: /default-rack/146.190.147.119:9866
+2026-03-22 16:13:35,016 INFO mapreduce.JobSubmitter: number of splits:2
+2026-03-22 16:13:35,856 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1771402826595_0111
+2026-03-22 16:13:35,856 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-03-22 16:13:36,227 INFO conf.Configuration: resource-types.xml not found
+2026-03-22 16:13:36,228 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-03-22 16:13:36,341 INFO impl.YarnClientImpl: Submitted application application_1771402826595_0111
+2026-03-22 16:13:36,391 INFO mapreduce.Job: The url to track the job: http://master-node:8088/proxy/application_1771402826595_0111/
+2026-03-22 16:13:36,395 INFO mapreduce.Job: Running job: job_1771402826595_0111
+2026-03-22 16:13:53,174 INFO mapreduce.Job: Job job_1771402826595_0111 running in uber mode : false
+2026-03-22 16:13:53,176 INFO mapreduce.Job:  map 0% reduce 0%
+2026-03-22 16:14:20,446 INFO mapreduce.Job:  map 100% reduce 0%
+2026-03-22 16:14:35,050 INFO mapreduce.Job:  map 100% reduce 100%
+2026-03-22 16:14:39,090 INFO mapreduce.Job: Job job_1771402826595_0111 completed successfully
+2026-03-22 16:14:39,307 INFO mapreduce.Job: Counters: 54
+        File System Counters
+                FILE: Number of bytes read=7137663
+                FILE: Number of bytes written=15218369
+                FILE: Number of read operations=0
+                FILE: Number of large read operations=0
+                FILE: Number of write operations=0
+                HDFS: Number of bytes read=181964998
+                HDFS: Number of bytes written=245
+                HDFS: Number of read operations=11
+                HDFS: Number of large read operations=0
+                HDFS: Number of write operations=2
+                HDFS: Number of bytes read erasure-coded=0
+        Job Counters
+                Launched map tasks=2
+                Launched reduce tasks=1
+                Data-local map tasks=2
+                Total time spent by all maps in occupied slots (ms)=100210
+                Total time spent by all reduces in occupied slots (ms)=23182
+                Total time spent by all map tasks (ms)=50105
+                Total time spent by all reduce tasks (ms)=11591
+                Total vcore-milliseconds taken by all map tasks=50105
+                Total vcore-milliseconds taken by all reduce tasks=11591
+                Total megabyte-milliseconds taken by all map tasks=25653760
+                Total megabyte-milliseconds taken by all reduce tasks=5934592
+        Map-Reduce Framework
+                Map input records=793074
+                Map output records=793073
+                Map output bytes=5551511
+                Map output materialized bytes=7137669
+                Input split bytes=198
+                Combine input records=0
+                Combine output records=0
+                Reduce input groups=25
+                Reduce shuffle bytes=7137669
+                Reduce input records=793073
+                Reduce output records=25
+                Spilled Records=1586146
+                Shuffled Maps =2
+                Failed Shuffles=0
+                Merged Map outputs=2
+                GC time elapsed (ms)=738
+                CPU time spent (ms)=9130
+                Physical memory (bytes) snapshot=663658496
+                Virtual memory (bytes) snapshot=6564466688
+                Total committed heap usage (bytes)=347963392
+                Peak Map Physical memory (bytes)=261828608
+                Peak Map Virtual memory (bytes)=2188230656
+                Peak Reduce Physical memory (bytes)=148205568
+                Peak Reduce Virtual memory (bytes)=2191282176
+        Shuffle Errors
+                BAD_ID=0
+                CONNECTION=0
+                IO_ERROR=0
+                WRONG_LENGTH=0
+                WRONG_MAP=0
+                WRONG_REDUCE=0
+        File Input Format Counters
+                Bytes Read=181964800
+        File Output Format Counters
+                Bytes Written=245
+2026-03-22 16:14:39,307 INFO streaming.StreamJob: Output directory: /user/mnajjar/project/m1/task4
+```
 
 ## Task 5: Law Enforcement Analysis
 ### Command Used
