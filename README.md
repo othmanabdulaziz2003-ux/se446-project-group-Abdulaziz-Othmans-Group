@@ -16,8 +16,10 @@
 | Abdulaziz Othman | Implemented Task 2 (Crime Type Distribution) |
 | Amr Issa |  Task 3 (Location Hotspots) |
 | Mahdi Najjar | Implemented Task 4 (Year-wise Crime Analysis)|
-| Yunus Demirboga | Assisted in Task 4 implementation and execution |
+| Yunus Demirboga | Completed all task alone under the "yunus" folder |
 | Abdulrahman Raed | Implemented Task 5 (Arrest Analysis) |
+
+Note: since there are only 4 tasks and we are 5 members, yunus did all the tasks alone all of his work is under the "yunus" folder.
 
 ---
 
